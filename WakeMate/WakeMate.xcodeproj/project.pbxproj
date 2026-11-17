@@ -64,6 +64,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				A1B2C3D4E5F6000000000003 /* WakeMate */,
+			);
 			name = WakeMate;
 			productName = WakeMate;
 			productReference = A1B2C3D4E5F6000000000005 /* WakeMate.app */;
@@ -93,9 +96,6 @@
 				"zh-Hans",
 			);
 			mainGroup = A1B2C3D4E5F600000000000F /* Main Group */;
-			fileSystemSynchronizedGroups = (
-				A1B2C3D4E5F6000000000003 /* WakeMate */,
-			);
 			productRefGroup = A1B2C3D4E5F6000000000004 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
