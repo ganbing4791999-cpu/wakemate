@@ -1,4 +1,4 @@
-name: Unzip WakeMate source
+name: Unzip and build WakeMate
 
 on:
   workflow_dispatch:
@@ -23,3 +23,43 @@ jobs:
           git add -A
           git commit -m "Unzip WakeMate source" || true
           git push origin HEAD:main
+
+  build:
+    needs: unzip
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Select Xcode 26
+        run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+      - name: Show Xcode version
+        run: xcodebuild -version
+      - name: Archive unsigned app
+        run: |
+          mkdir -p build
+          xcodebuild \
+            -project WakeMate/WakeMate.xcodeproj \
+            -scheme WakeMate \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination generic/platform=iOS \
+            -archivePath build/WakeMate.xcarchive \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            DEVELOPMENT_TEAM="" \
+            IPHONEOS_DEPLOYMENT_TARGET=26.0 \
+            archive
+      - name: Pack IPA
+        run: |
+          mkdir -p build/Payload
+          cp -R build/WakeMate.xcarchive/Products/Applications/WakeMate.app build/Payload/
+          cd build
+          zip -qr WakeMate.ipa Payload
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: WakeMate-unsigned-IPA
+          path: build/WakeMate.ipa
+          if-no-files-found: error
