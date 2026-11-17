@@ -15,6 +15,7 @@ jobs:
         run: |
           unzip -o WakeMate-GitHub-upload.zip -d . || [ $? -eq 1 ]
           rm -f WakeMate-GitHub-upload.zip
+          rm -f .github/workflows/build.yml
       - name: Commit files
         run: |
           git config user.name "github-actions[bot]"
