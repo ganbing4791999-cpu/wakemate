@@ -99,7 +99,7 @@ final class AlarmScheduler {
             : "醒伴备份响铃 · \(item.label)"
 
         let alert = AlarmPresentation.Alert(
-            title: title,
+            title: LocalizedStringResource(stringLiteral: title),
             secondaryButton: AlarmButton(
                 text: "开始任务",
                 textColor: .white,
@@ -108,7 +108,7 @@ final class AlarmScheduler {
             secondaryButtonBehavior: .custom
         )
 
-        let attributes = AlarmAttributes(
+        let attributes: AlarmAttributes<WakeMetadata> = AlarmAttributes(
             presentation: AlarmPresentation(alert: alert),
             metadata: WakeMetadata(label: item.label, characterID: item.characterID),
             tintColor: isPrimary ? Color.indigo : Color.orange
