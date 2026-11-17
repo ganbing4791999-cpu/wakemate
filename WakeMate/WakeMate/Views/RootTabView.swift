@@ -82,10 +82,10 @@ struct RootTabView: View {
 
         if let last = streak.lastCompletionDay {
             let lastDay = calendar.startOfDay(for: last)
-            if calendar.isDate(lastDay, equalTo: today, in: .day) {
+            if calendar.isDate(lastDay, inSameDayAs: today) {
                 // 同一天完成多次，不重复加
             } else if let next = calendar.date(byAdding: .day, value: 1, to: lastDay),
-                      calendar.isDate(next, equalTo: today, in: .day) {
+                      calendar.isDate(next, inSameDayAs: today) {
                 streak.current += 1
             } else {
                 streak.current = 1
