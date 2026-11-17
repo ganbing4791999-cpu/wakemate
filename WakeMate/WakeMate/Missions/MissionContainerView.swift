@@ -21,6 +21,9 @@ struct MissionContainerView: View {
 
                 Spacer()
             }
+            .onChange(of: session.isFinished) { _, finished in
+                if finished { onAllComplete() }
+            }
             .navigationTitle("醒伴 · 晨间任务")
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -39,9 +42,6 @@ struct MissionContainerView: View {
             BubbleTapView { session.advance() }
         case .findDifferent:
             FindDifferentView { session.advance() }
-        }
-        .onChange(of: session.isFinished) { _, finished in
-            if finished { onAllComplete() }
         }
     }
 }
